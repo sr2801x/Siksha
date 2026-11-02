@@ -6,7 +6,8 @@ const request = require('supertest');
 delete process.env.MONGO_URI;
 const app = require('../src/app');
 const { connectDB, disconnectDB } = require('../src/db');
-const { seed, DEMO } = require('../src/seed');
+const { seed, seedIfEmpty, DEMO } = require('../src/seed');
+const { User } = require('../src/models');
 
 let teacherToken, studentToken, quizId;
 
@@ -17,6 +18,14 @@ before(async () => {
 after(disconnectDB);
 
 const login = async (email, password) => (await request(app).post('/api/auth/login').send({ email, password })).body.token;
+
+test('seedIfEmpty updates the legacy demo teacher name without reseeding data', async () => {
+  await User.updateOne({ email: DEMO.teacher.email }, { $set: { name: 'Dr. Lalit Sharma' } });
+  await seedIfEmpty();
+  const teacher = await User.findOne({ email: DEMO.teacher.email });
+  assert.equal(teacher.name, 'Miss Radha');
+  assert.equal(await User.estimatedDocumentCount(), 5);
+});
 
 test('register validates input and rejects duplicates', async () => {
   let r = await request(app).post('/api/auth/register').send({ name: 'X', email: 'bad', password: '123456', role: 'student', className: '9' });

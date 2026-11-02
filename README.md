@@ -3,7 +3,7 @@
 A centralized MERN web app where school students (classes 6–12) find notes, PDFs, videos and quizzes organised by **class → subject → topic**, get **instant quiz feedback**, and **track their progress**. Teachers upload and manage content, build quizzes, and view student performance reports.
 
 > IROP project · Department of CSE, Chitkara University, Punjab
-> Nishita · Shivika · Sneha Rathore · Manya Garg — supervised by Dr. Lalit Sharma
+> Nishita · Shivika · Sneha Rathore · Manya Garg
 
 ---
 

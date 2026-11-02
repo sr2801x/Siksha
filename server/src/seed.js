@@ -534,7 +534,14 @@ async function seed({ wipe = true } = {}) {
 }
 
 async function seedIfEmpty() {
-  if ((await User.estimatedDocumentCount()) === 0) await seed({ wipe: false });
+  if ((await User.estimatedDocumentCount()) === 0) {
+    await seed({ wipe: false });
+    return;
+  }
+  await User.updateOne(
+    { email: DEMO.teacher.email, role: 'teacher', name: 'Dr. Lalit Sharma' },
+    { $set: { name: DEMO.teacher.name } },
+  );
 }
 
 module.exports = { seed, seedIfEmpty, DEMO };
