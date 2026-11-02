@@ -122,15 +122,15 @@ export function Modal({ open, onClose, title, children, wide }) {
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-900/50 p-4 backdrop-blur-sm sm:items-center" onMouseDown={onClose}>
-      <div className={`card fade-in my-8 w-full ${wide ? 'max-w-3xl' : 'max-w-lg'}`} onMouseDown={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-slate-900/50 p-4 backdrop-blur-sm" onMouseDown={onClose}>
+      <div className={`card fade-in flex max-h-[calc(100dvh-2rem)] w-full flex-col ${wide ? 'max-w-3xl' : 'max-w-lg'}`} onMouseDown={(e) => e.stopPropagation()}>
+        <div className="flex shrink-0 items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button onClick={onClose} className="btn-ghost -mr-2 p-2">
             <X className="size-5" />
           </button>
         </div>
-        <div className="p-6">{children}</div>
+        <div className="min-h-0 overflow-y-auto overscroll-contain p-6">{children}</div>
       </div>
     </div>
   );
