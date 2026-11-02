@@ -68,7 +68,8 @@ function ResourceForm({ initial, onSaved, onCancel }) {
   const accepts = form.type === 'pdf' ? 'application/pdf' : 'video/mp4,video/webm';
 
   return (
-    <form onSubmit={submit} className="space-y-4">
+    <form onSubmit={submit} className="flex h-full min-h-0 flex-col">
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-6">
       <ErrorBox error={error} />
       <div>
         <label className="label">Resource type</label>
@@ -144,7 +145,8 @@ function ResourceForm({ initial, onSaved, onCancel }) {
         <label className="label">Tags (comma separated)</label>
         <input className="input" value={form.tags} onChange={set('tags')} placeholder="algebra, cbse, revision" />
       </div>
-      <div className="flex justify-end gap-2 pt-2">
+      </div>
+      <div className="flex shrink-0 justify-end gap-2 border-t border-slate-200 p-4 dark:border-slate-800 sm:px-6">
         <button type="button" className="btn-secondary" onClick={onCancel}>Cancel</button>
         <button className="btn-primary" disabled={busy}>{busy ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} {initial ? 'Save changes' : 'Publish'}</button>
       </div>
@@ -233,7 +235,7 @@ export default function ManageContent() {
         </div>
       )}
 
-      <Modal open={Boolean(editing)} onClose={() => setEditing(null)} title={editing === 'new' ? 'New resource' : 'Edit resource'} wide>
+      <Modal open={Boolean(editing)} onClose={() => setEditing(null)} title={editing === 'new' ? 'New resource' : 'Edit resource'} wide scrollable>
         {editing && (
           <ResourceForm
             initial={editing === 'new' ? null : editing}
